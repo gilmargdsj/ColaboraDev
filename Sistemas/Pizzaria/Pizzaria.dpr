@@ -12,7 +12,9 @@ uses
   clsTClienteDAO in 'Classes\clsTClienteDAO.pas',
   clsTDBUtils in '..\..\lib\Classes\Utils\clsTDBUtils.pas',
   clsTBuscaCep in '..\..\lib\Classes\Utils\clsTBuscaCep.pas',
-  libConstantes in '..\..\lib\libConstantes.pas';
+  libConstantes in '..\..\lib\libConstantes.pas',
+  ufrmPedidos in 'forms\ufrmPedidos.pas' {frmPedidos},
+  ufrmSelCliente in 'forms\ufrmSelCliente.pas' {frmSelCliente};
 
 {$R *.res}
 
@@ -21,5 +23,7 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmMain, frmMain);
   Application.CreateForm(TdmMain, dmMain);
+  Application.CreateForm(TfrmPedidos, frmPedidos);
+  Application.CreateForm(TfrmSelCliente, frmSelCliente);
   Application.Run;
 end.

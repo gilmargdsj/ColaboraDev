@@ -175,6 +175,14 @@
       FieldName = 'pre'#231'o_unitario'
       Required = True
     end
+    object qryProdutos_cod_catalogo: TStringField
+      FieldName = 'cod_catalogo'
+      Size = 10
+    end
+    object qryProdutos_conteudo: TStringField
+      FieldName = 'conteudo'
+      Size = 500
+    end
   end
   object qryPedidos_: TUniQuery
     Connection = UniConnection1

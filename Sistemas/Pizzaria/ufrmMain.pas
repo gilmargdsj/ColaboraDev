@@ -14,7 +14,6 @@ type
     Clientes1: TMenuItem;
     Produtos1: TMenuItem;
     Panel1: TPanel;
-    SpeedButton1: TSpeedButton;
     SpeedButton2: TSpeedButton;
     SpeedButton3: TSpeedButton;
     SpeedButton4: TSpeedButton;
@@ -23,6 +22,9 @@ type
     procedure Sair1Click(Sender: TObject);
     procedure SpeedButton4Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure SpeedButton5Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,7 +39,9 @@ implementation
 {$R *.dfm}
 
 uses
-  ufrmCadCliente;
+  ufrmCadCliente,
+  ufrmCadProduto,
+  ufrmPedidos;
 
 procedure TfrmMain.FormShow(Sender: TObject);
 begin
@@ -51,6 +55,26 @@ begin
   Application.Terminate;
 end;
 
+procedure TfrmMain.SpeedButton2Click(Sender: TObject);
+var
+  frm: TfrmPedidos;
+begin
+  frm:=TfrmPedidos.Create(Application);
+  frm.Position := poDesktopCenter;
+  frm.ShowModal;
+  FreeAndNil(frm);
+end;
+
+procedure TfrmMain.SpeedButton3Click(Sender: TObject);
+var
+  frm: TfrmCadProduto;
+begin
+  frm:=TfrmCadProduto.Create(Application);
+  frm.Position := poDesktopCenter;
+  frm.ShowModal;
+  FreeAndNil(frm);
+end;
+
 procedure TfrmMain.SpeedButton4Click(Sender: TObject);
 var
   frm: TfrmCadCliente;
@@ -59,6 +83,11 @@ begin
   frm.Position := poDesktopCenter;
   frm.ShowModal;
   FreeAndNil(frm);
+end;
+
+procedure TfrmMain.SpeedButton5Click(Sender: TObject);
+begin
+  Application.Terminate;
 end;
 
 end.

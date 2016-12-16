@@ -102,7 +102,6 @@ type
     SpeedButton4: TSpeedButton;
     DBGrid1: TDBGrid;
     DBGrid2: TDBGrid;
-    SpeedButton13: TSpeedButton;
     Edit2: TEdit;
     MainMenu1: TMainMenu;
     DBNavigator1: TDBNavigator;
@@ -110,18 +109,25 @@ type
     Label15: TLabel;
     ACBrCEP1: TACBrCEP;
     Memo1: TMemo;
+    SpeedButton14: TSpeedButton;
+    Label16: TLabel;
+    SpeedButton15: TSpeedButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButton9Click(Sender: TObject);
     procedure edBuscaNumeroKeyPress(Sender: TObject; var Key: Char);
     procedure DBNavigator1Click(Sender: TObject; Button: TNavigateBtn);
     procedure SpeedButton11Click(Sender: TObject);
-    procedure SpeedButton13Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
     procedure SpeedButton5Click(Sender: TObject);
     procedure SpeedButton7Click(Sender: TObject);
     procedure SpeedButton8Click(Sender: TObject);
     procedure SpeedButton12Click(Sender: TObject);
     procedure SpeedButton4Click(Sender: TObject);
+    procedure Edit2KeyPress(Sender: TObject; var Key: Char);
+    procedure SpeedButton6Click(Sender: TObject);
+    procedure SpeedButton10Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
+    procedure SpeedButton14Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -173,9 +179,46 @@ begin
   end;
 end;
 
+procedure TfrmCadCliente.Edit2KeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key = #$D then
+  begin
+    if Edit2.Text = EmptyStr then
+      Exit;
+    ACBrCEP1.BuscarPorCEP(Edit2.Text);
+    if ACBrCEP1.Enderecos.Count > 0 then
+    begin
+      try
+        if (MessageBox(0, PWideChar('Favor confirmar o endereço : '+_ENTER_+_ENTER_+_ENTER_+ACBrCEP1.Enderecos.Objects[0].Logradouro), 'Endereço', MB_ICONQUESTION or MB_YESNO or MB_DEFBUTTON1) = idYes) then
+        begin
+          dmMain.qryEnderecos_.Insert;
+          dmMain.qryEnderecos_descricao.AsString := 'Residência';
+          dmMain.qryEnderecos_logradouro.AsString := ACBrCEP1.Enderecos.Objects[0].Logradouro;
+          dmMain.qryEnderecos_bairro.AsString := ACBrCEP1.Enderecos.Objects[0].Bairro;
+          dmMain.qryEnderecos_cidade.AsString := ACBrCEP1.Enderecos.Objects[0].Municipio;
+          dmMain.qryEnderecos_cep.AsString := ACBrCEP1.Enderecos.Objects[0].CEP;
+          dmMain.qryEnderecos_uf.AsString := ACBrCEP1.Enderecos.Objects[0].UF;
+          dbeEndereco_Descricao.SetFocus;
+        end;
+
+      finally
+      end;
+    end
+    else
+    begin
+      ShowMessage('CEP não encontrado !');
+    end;
+  end;
+end;
+
 procedure TfrmCadCliente.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   frmCadCliente := nil;
+end;
+
+procedure TfrmCadCliente.SpeedButton10Click(Sender: TObject);
+begin
+  dmMain.qryTelefones_.Edit;
 end;
 
 procedure TfrmCadCliente.SpeedButton11Click(Sender: TObject);
@@ -203,32 +246,14 @@ begin
   end;
 end;
 
-procedure TfrmCadCliente.SpeedButton13Click(Sender: TObject);
+procedure TfrmCadCliente.SpeedButton14Click(Sender: TObject);
 begin
-  if Edit2.Text = EmptyStr then
-    Exit;
-  ACBrCEP1.BuscarPorCEP(Edit2.Text);
-  if ACBrCEP1.Enderecos.Count > 0 then
-  begin
-    try
-      if (MessageBox(0, PWideChar('Favor confirmar o endereço : '+_ENTER_+_ENTER_+_ENTER_+ACBrCEP1.Enderecos.Objects[0].Logradouro), 'Endereço', MB_ICONQUESTION or MB_YESNO or MB_DEFBUTTON1) = idYes) then
-      begin
-        dmMain.qryEnderecos_.Insert;
-        dmMain.qryEnderecos_descricao.AsString := 'Residência';
-        dmMain.qryEnderecos_logradouro.AsString := ACBrCEP1.Enderecos.Objects[0].Logradouro;
-        dmMain.qryEnderecos_bairro.AsString := ACBrCEP1.Enderecos.Objects[0].Bairro;
-        dmMain.qryEnderecos_cidade.AsString := ACBrCEP1.Enderecos.Objects[0].Municipio;
-        dmMain.qryEnderecos_cep.AsString := ACBrCEP1.Enderecos.Objects[0].CEP;
-        dmMain.qryEnderecos_uf.AsString := ACBrCEP1.Enderecos.Objects[0].UF;
-      end;
+  Self.Close;
+end;
 
-    finally
-    end;
-  end
-  else
-  begin
-    ShowMessage('CEP não encontrado !');
-  end;
+procedure TfrmCadCliente.SpeedButton2Click(Sender: TObject);
+begin
+  dmMain.qryEnderecos_.Edit;
 end;
 
 procedure TfrmCadCliente.SpeedButton9Click(Sender: TObject);
@@ -273,6 +298,11 @@ procedure TfrmCadCliente.SpeedButton5Click(Sender: TObject);
 begin
   dmMain.InserirCliente;
   dbeCliente_Apelido.SetFocus;
+end;
+
+procedure TfrmCadCliente.SpeedButton6Click(Sender: TObject);
+begin
+  dmMain.qryClientes_.Edit;
 end;
 
 procedure TfrmCadCliente.SpeedButton7Click(Sender: TObject);

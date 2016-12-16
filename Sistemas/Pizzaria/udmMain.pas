@@ -73,6 +73,8 @@ type
     qryClienteXTelefones_id: TLargeintField;
     qryClienteXTelefones_cliente_id: TLargeintField;
     qryClienteXTelefones_telefone_id: TLargeintField;
+    qryProdutos_cod_catalogo: TStringField;
+    qryProdutos_conteudo: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure qryEnderecos_BeforePost(DataSet: TDataSet);
     procedure qryTelefones_BeforePost(DataSet: TDataSet);
@@ -103,6 +105,8 @@ type
     procedure FiltraCliente(ClienteID: Integer);
     procedure FiltraEnderecos(ClienteID: Integer);
     procedure FiltraTelefones(ClienteID: Integer);
+
+    procedure FiltraProduto(Descricao: String);
 
     procedure ResetCads;
     function BuscarPorTelefone(Telefone: String): Boolean;
@@ -244,6 +248,20 @@ begin
   qryEnderecos_.Close;
   qryEnderecos_.ParamByName('cliente_id').AsInteger := qryClientes_id.AsInteger;
   qryEnderecos_.Open;
+end;
+
+procedure TdmMain.FiltraProduto(Descricao: String);
+begin
+  qryProdutos_.Close;
+  qryProdutos_.SQL.Clear;
+  qryProdutos_.SQL.Add(' SELECT * ');
+  qryProdutos_.SQL.Add(' FROM "DaVinci".produtos ');
+  if Descricao <> EmptyStr then
+  begin
+    qryProdutos_.SQL.Add(' WHERE descricao like('+QuotedStr(Descricao)+')');
+  end;
+  qryProdutos_.SQL.Add(' order by descricao ');
+  qryProdutos_.Open;
 end;
 
 procedure TdmMain.FiltraTelefones(ClienteID: Integer);
