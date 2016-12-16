@@ -163,21 +163,21 @@ object frmCadCliente: TfrmCadCliente
       end
       object Label7: TLabel
         Left = 13
-        Top = 110
+        Top = 142
         Width = 28
         Height = 13
         Caption = 'Bairro'
       end
       object Label8: TLabel
         Left = 13
-        Top = 140
+        Top = 172
         Width = 33
         Height = 13
         Caption = 'Cidade'
       end
       object Label9: TLabel
-        Left = 13
-        Top = 170
+        Left = 213
+        Top = 227
         Width = 13
         Height = 13
         Caption = 'UF'
@@ -210,6 +210,13 @@ object frmCadCliente: TfrmCadCliente
         Height = 22
         OnClick = SpeedButton13Click
       end
+      object Label15: TLabel
+        Left = 13
+        Top = 111
+        Width = 37
+        Height = 13
+        Caption = 'N'#250'mero'
+      end
       object dbeEndereco_ID: TDBEdit
         Left = 88
         Top = 17
@@ -231,7 +238,7 @@ object frmCadCliente: TfrmCadCliente
       end
       object dbeEndereco_Bairro: TDBEdit
         Left = 88
-        Top = 107
+        Top = 139
         Width = 300
         Height = 21
         DataField = 'bairro'
@@ -240,7 +247,7 @@ object frmCadCliente: TfrmCadCliente
       end
       object dbeEndereco_Cidade: TDBEdit
         Left = 88
-        Top = 137
+        Top = 169
         Width = 300
         Height = 21
         DataField = 'cidade'
@@ -248,9 +255,9 @@ object frmCadCliente: TfrmCadCliente
         TabOrder = 3
       end
       object dbeEndereco_UF: TDBEdit
-        Left = 88
-        Top = 167
-        Width = 300
+        Left = 240
+        Top = 224
+        Width = 49
         Height = 21
         DataField = 'uf'
         DataSource = dsEnderecos
@@ -268,7 +275,7 @@ object frmCadCliente: TfrmCadCliente
       object dbeEndereco_CEP: TDBEdit
         Left = 88
         Top = 224
-        Width = 300
+        Width = 96
         Height = 21
         DataField = 'cep'
         DataSource = dsEnderecos
@@ -356,6 +363,15 @@ object frmCadCliente: TfrmCadCliente
         Height = 21
         TabOrder = 10
         Text = '04212020'
+      end
+      object DBEdit1: TDBEdit
+        Left = 88
+        Top = 108
+        Width = 121
+        Height = 21
+        DataField = 'numero'
+        DataSource = dsEnderecos
+        TabOrder = 11
       end
     end
     object gpbTelefones: TGroupBox

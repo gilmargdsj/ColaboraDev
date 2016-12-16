@@ -35,7 +35,6 @@ type
     PostgreSQLUniProvider1: TPostgreSQLUniProvider;
     qryEnderecos_: TUniQuery;
     qryTelefones_: TUniQuery;
-    qryClienteXEnderecos_: TUniQuery;
     qryClientes_id: TLargeintField;
     qryClientes_nome: TStringField;
     qryClientes_apelido: TStringField;
@@ -53,22 +52,24 @@ type
     qryTelefones_id: TLargeintField;
     qryTelefones_numero: TStringField;
     qryTelefones_tipo_telefone: TStringField;
-    qryClienteXEnderecos_id: TLargeintField;
-    qryClienteXEnderecos_cliente_id: TLargeintField;
-    qryClienteXEnderecos_endereco_id: TLargeintField;
     qryProdutos_: TUniQuery;
     qryProdutos_id: TLargeintField;
     qryProdutos_descricao: TStringField;
     qryProdutos_preço_unitario: TFloatField;
     qryPedidos_: TUniQuery;
     qryPedidoXitems_: TUniQuery;
-    qryClienteXTelefones_: TUniQuery;
     qryPedidoXitems_id: TLargeintField;
     qryPedidoXitems_pedido_id: TLargeintField;
     qryPedidoXitems_produto_id: TLargeintField;
     qryPedidoXitems_qtde: TFloatField;
     qryPedidoXitems_valor_unitario: TFloatField;
     qryPedidoXitems_valor_total: TFloatField;
+    qryEnderecos_numero: TStringField;
+    qryClienteXEnderecos_: TUniQuery;
+    qryClienteXEnderecos_id: TLargeintField;
+    qryClienteXEnderecos_cliente_id: TLargeintField;
+    qryClienteXEnderecos_endereco_id: TLargeintField;
+    qryClienteXTelefones_: TUniQuery;
     qryClienteXTelefones_id: TLargeintField;
     qryClienteXTelefones_cliente_id: TLargeintField;
     qryClienteXTelefones_telefone_id: TLargeintField;
@@ -353,10 +354,16 @@ begin
 end;
 
 function TdmMain.SalvarCliente;
+var
+  id: Integer;
 begin
   Result := False;
   try
+    id := NextVal('cliente_id');
+    qryClientes_id.AsInteger := id;
     qryClientes_.Post;
+    qryClientes_.Refresh;
+    qryClientes_.Locate('ID', id, []);
     Result := True;
   except
 

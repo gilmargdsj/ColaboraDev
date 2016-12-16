@@ -63,7 +63,6 @@
       '  inner join "DaVinci".Clientes c on (c.ID = ce.cliente_id)'
       'WHERE (c.ID = :cliente_id) or (:cliente_id is null)')
     DetailFields = 'id'
-    Active = True
     BeforePost = qryEnderecos_BeforePost
     AfterPost = qryEnderecos_AfterPost
     Left = 136
@@ -114,6 +113,10 @@
       FieldName = 'descricao'
       Size = 200
     end
+    object qryEnderecos_numero: TStringField
+      FieldName = 'numero'
+      Size = 10
+    end
   end
   object qryTelefones_: TUniQuery
     Connection = UniConnection1
@@ -126,7 +129,6 @@
       '  inner join "DaVinci".Clientes c on (c.ID = ct.cliente_id)'
       'WHERE (c.ID = :cliente_id) or (:cliente_id is null)')
     DetailFields = 'id'
-    Active = True
     BeforePost = qryTelefones_BeforePost
     AfterPost = qryTelefones_AfterPost
     Left = 56
@@ -149,63 +151,6 @@
     object qryTelefones_tipo_telefone: TStringField
       FieldName = 'tipo_telefone'
       Size = 30
-    end
-  end
-  object qryClienteXEnderecos_: TUniQuery
-    SQLInsert.Strings = (
-      'INSERT INTO "DaVinci".clientexenderecos'
-      '  (cliente_id, endereco_id)'
-      'VALUES'
-      '  (:cliente_id, :endereco_id)')
-    SQLDelete.Strings = (
-      'DELETE FROM "DaVinci".clientexenderecos'
-      'WHERE'
-      '  id = :Old_id')
-    SQLUpdate.Strings = (
-      'UPDATE "DaVinci".clientexenderecos'
-      'SET'
-      '  cliente_id = :cliente_id, endereco_id = :endereco_id'
-      'WHERE'
-      '  id = :Old_id')
-    SQLLock.Strings = (
-      'SELECT * FROM "DaVinci".clientexenderecos'
-      'WHERE'
-      '  id = :Old_id'
-      'FOR UPDATE NOWAIT')
-    SQLRefresh.Strings = (
-      'SELECT cliente_id, endereco_id FROM "DaVinci".clientexenderecos'
-      'WHERE'
-      '  id = :P_1_id')
-    SQLRecCount.Strings = (
-      'SELECT count(*) FROM ('
-      'SELECT * FROM "DaVinci".clientexenderecos'
-      ''
-      ') t')
-    Connection = UniConnection1
-    SQL.Strings = (
-      'SELECT *'
-      'FROM "DaVinci".clienteXenderecos'
-      'order by cliente_id')
-    DetailFields = 'cliente_id'
-    Active = True
-    Left = 248
-    Top = 240
-    ParamData = <
-      item
-        DataType = ftLargeint
-        Name = 'id'
-        ParamType = ptInput
-        Value = nil
-      end>
-    object qryClienteXEnderecos_id: TLargeintField
-      AutoGenerateValue = arAutoInc
-      FieldName = 'id'
-    end
-    object qryClienteXEnderecos_cliente_id: TLargeintField
-      FieldName = 'cliente_id'
-    end
-    object qryClienteXEnderecos_endereco_id: TLargeintField
-      FieldName = 'endereco_id'
     end
   end
   object qryProdutos_: TUniQuery
@@ -272,6 +217,62 @@
       Required = True
     end
   end
+  object qryClienteXEnderecos_: TUniQuery
+    SQLInsert.Strings = (
+      'INSERT INTO "DaVinci".clientexenderecos'
+      '  (cliente_id, endereco_id)'
+      'VALUES'
+      '  (:cliente_id, :endereco_id)')
+    SQLDelete.Strings = (
+      'DELETE FROM "DaVinci".clientexenderecos'
+      'WHERE'
+      '  id = :Old_id')
+    SQLUpdate.Strings = (
+      'UPDATE "DaVinci".clientexenderecos'
+      'SET'
+      '  cliente_id = :cliente_id, endereco_id = :endereco_id'
+      'WHERE'
+      '  id = :Old_id')
+    SQLLock.Strings = (
+      'SELECT * FROM "DaVinci".clientexenderecos'
+      'WHERE'
+      '  id = :Old_id'
+      'FOR UPDATE NOWAIT')
+    SQLRefresh.Strings = (
+      'SELECT cliente_id, endereco_id FROM "DaVinci".clientexenderecos'
+      'WHERE'
+      '  id = :P_1_id')
+    SQLRecCount.Strings = (
+      'SELECT count(*) FROM ('
+      'SELECT * FROM "DaVinci".clientexenderecos'
+      ''
+      ') t')
+    Connection = UniConnection1
+    SQL.Strings = (
+      'SELECT *'
+      'FROM "DaVinci".clienteXenderecos'
+      'order by cliente_id')
+    DetailFields = 'cliente_id'
+    Left = 240
+    Top = 208
+    ParamData = <
+      item
+        DataType = ftLargeint
+        Name = 'id'
+        ParamType = ptInput
+        Value = nil
+      end>
+    object qryClienteXEnderecos_id: TLargeintField
+      AutoGenerateValue = arAutoInc
+      FieldName = 'id'
+    end
+    object qryClienteXEnderecos_cliente_id: TLargeintField
+      FieldName = 'cliente_id'
+    end
+    object qryClienteXEnderecos_endereco_id: TLargeintField
+      FieldName = 'endereco_id'
+    end
+  end
   object qryClienteXTelefones_: TUniQuery
     Connection = UniConnection1
     SQL.Strings = (
@@ -279,9 +280,8 @@
       'FROM "DaVinci".clienteXtelefones'
       'order by cliente_id')
     DetailFields = 'cliente_id'
-    Active = True
-    Left = 248
-    Top = 304
+    Left = 240
+    Top = 272
     ParamData = <
       item
         DataType = ftLargeint

@@ -11,7 +11,8 @@ uses
   clsTClienteDTO in 'Classes\clsTClienteDTO.pas',
   clsTClienteDAO in 'Classes\clsTClienteDAO.pas',
   clsTDBUtils in '..\..\lib\Classes\Utils\clsTDBUtils.pas',
-  clsTBuscaCep in '..\..\lib\Classes\Utils\clsTBuscaCep.pas';
+  clsTBuscaCep in '..\..\lib\Classes\Utils\clsTBuscaCep.pas',
+  libConstantes in '..\..\lib\libConstantes.pas';
 
 {$R *.res}
 

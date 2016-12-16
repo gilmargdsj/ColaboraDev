@@ -106,6 +106,8 @@ type
     Edit2: TEdit;
     MainMenu1: TMainMenu;
     DBNavigator1: TDBNavigator;
+    DBEdit1: TDBEdit;
+    Label15: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButton9Click(Sender: TObject);
     procedure edBuscaNumeroKeyPress(Sender: TObject; var Key: Char);
@@ -133,7 +135,8 @@ implementation
 
 uses
   udmMain,
-  clsTBuscaCep;
+  clsTBuscaCep,
+  libConstantes;
 
 procedure TfrmCadCliente.DBNavigator1Click(Sender: TObject; Button: TNavigateBtn);
 begin
@@ -201,25 +204,28 @@ end;
 procedure TfrmCadCliente.SpeedButton13Click(Sender: TObject);
 var
   Endereco: TBuscaCep;
+  mensagem: PWideChar;
+  msg: String;
 begin
   if Edit2.Text = EmptyStr then
     Exit;
   Endereco := TBuscaCep.Create(Edit2.Text);
   try
-    if (MessageBox(0, 'Deseja inserir este endereço ?', 'Endereço', MB_ICONQUESTION or MB_YESNO or MB_DEFBUTTON1) = idYes) then
+    msg := 'Deseja inserir este endereço :'+_ENTER_+'  Logradouro : '+Endereco.Logradouro+_ENTER_+'  Bairro : '+Endereco.Bairro+_ENTER_+'  Cidade : '+Endereco.Cidade+_ENTER_+'  CEP : '+Endereco.Cep+_ENTER_+'  UF : '+Endereco.UF;
+    StringToWideChar(msg, mensagem, Length(msg)+20);
+    if (MessageBox(0, mensagem, 'Endereço', MB_ICONQUESTION or MB_YESNO or MB_DEFBUTTON1) = idYes) then
     begin
-      dmMain.InserirEndereco;
-      dbeEndereco_Descricao.Text := 'Residência';
-      dbeEndereco_CEP.Text := Endereco.Cep;
-      dbeEndereco_Logradouro.Text := Endereco.Logradouro;
-      dbeEndereco_Bairro.Text := Endereco.Bairro;
-      dbeEndereco_Cidade.Text := Endereco.Cidade;
-      dbeEndereco_UF.Text := Endereco.UF;
-
-//      dmMain.SalvarEndereco(dmMain.qryClientes_id.AsInteger);
+      dmMain.qryEnderecos_.Insert;
+      dmMain.qryEnderecos_descricao.AsString := 'Residência';
+      dmMain.qryEnderecos_logradouro.AsString := Endereco.Logradouro;
+      dmMain.qryEnderecos_bairro.AsString := Endereco.Bairro;
+      dmMain.qryEnderecos_cidade.AsString := Endereco.Cidade;
+      dmMain.qryEnderecos_cep.AsString := Endereco.Cep;
+      dmMain.qryEnderecos_uf.AsString := Endereco.UF;
     end;
   finally
-    Endereco.Free;
+    FreeAndNil(endereco);
+    FreeAndNil(mensagem);
   end;
 end;
 
