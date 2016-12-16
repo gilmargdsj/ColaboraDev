@@ -1,0 +1,5 @@
+clienteXtelefones
+
+SELECT *
+FROM "DaVinci".clienteXtelefones
+order by id cliente_id

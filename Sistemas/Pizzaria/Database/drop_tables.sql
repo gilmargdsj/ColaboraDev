@@ -1,0 +1,13 @@
+DROP TABLE "DaVinci".usuarioXenderecos;
+DROP TABLE "DaVinci".usuarioXtelefones;
+DROP TABLE "DaVinci".clienteXenderecos;
+DROP TABLE "DaVinci".clienteXtelefones;
+DROP TABLE "DaVinci".produtoXingredientes;
+DROP TABLE "DaVinci".pedidoXitems;
+DROP TABLE "DaVinci".usuarios;
+DROP TABLE "DaVinci".produtos;
+DROP TABLE "DaVinci".ingredientes;
+DROP TABLE "DaVinci".pedidos;
+DROP TABLE "DaVinci".clientes;
+DROP TABLE "DaVinci".enderecos;
+DROP TABLE "DaVinci".telefones;
