@@ -45,7 +45,7 @@ uses
   Data.Bind.Components,
   Data.Bind.ObjectScope,
   Soap.Rio,
-  Soap.SOAPHTTPClient;
+  Soap.SOAPHTTPClient, ACBrBase, ACBrSocket, ACBrCEP;
 
 type
   TfrmCadCliente = class(TForm)
@@ -108,6 +108,8 @@ type
     DBNavigator1: TDBNavigator;
     DBEdit1: TDBEdit;
     Label15: TLabel;
+    ACBrCEP1: TACBrCEP;
+    Memo1: TMemo;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButton9Click(Sender: TObject);
     procedure edBuscaNumeroKeyPress(Sender: TObject; var Key: Char);
@@ -202,30 +204,30 @@ begin
 end;
 
 procedure TfrmCadCliente.SpeedButton13Click(Sender: TObject);
-var
-  Endereco: TBuscaCep;
-  mensagem: PWideChar;
-  msg: String;
 begin
   if Edit2.Text = EmptyStr then
     Exit;
-  Endereco := TBuscaCep.Create(Edit2.Text);
-  try
-    msg := 'Deseja inserir este endereço :'+_ENTER_+'  Logradouro : '+Endereco.Logradouro+_ENTER_+'  Bairro : '+Endereco.Bairro+_ENTER_+'  Cidade : '+Endereco.Cidade+_ENTER_+'  CEP : '+Endereco.Cep+_ENTER_+'  UF : '+Endereco.UF;
-    StringToWideChar(msg, mensagem, Length(msg)+20);
-    if (MessageBox(0, mensagem, 'Endereço', MB_ICONQUESTION or MB_YESNO or MB_DEFBUTTON1) = idYes) then
-    begin
-      dmMain.qryEnderecos_.Insert;
-      dmMain.qryEnderecos_descricao.AsString := 'Residência';
-      dmMain.qryEnderecos_logradouro.AsString := Endereco.Logradouro;
-      dmMain.qryEnderecos_bairro.AsString := Endereco.Bairro;
-      dmMain.qryEnderecos_cidade.AsString := Endereco.Cidade;
-      dmMain.qryEnderecos_cep.AsString := Endereco.Cep;
-      dmMain.qryEnderecos_uf.AsString := Endereco.UF;
+  ACBrCEP1.BuscarPorCEP(Edit2.Text);
+  if ACBrCEP1.Enderecos.Count > 0 then
+  begin
+    try
+      if (MessageBox(0, PWideChar('Favor confirmar o endereço : '+_ENTER_+_ENTER_+_ENTER_+ACBrCEP1.Enderecos.Objects[0].Logradouro), 'Endereço', MB_ICONQUESTION or MB_YESNO or MB_DEFBUTTON1) = idYes) then
+      begin
+        dmMain.qryEnderecos_.Insert;
+        dmMain.qryEnderecos_descricao.AsString := 'Residência';
+        dmMain.qryEnderecos_logradouro.AsString := ACBrCEP1.Enderecos.Objects[0].Logradouro;
+        dmMain.qryEnderecos_bairro.AsString := ACBrCEP1.Enderecos.Objects[0].Bairro;
+        dmMain.qryEnderecos_cidade.AsString := ACBrCEP1.Enderecos.Objects[0].Municipio;
+        dmMain.qryEnderecos_cep.AsString := ACBrCEP1.Enderecos.Objects[0].CEP;
+        dmMain.qryEnderecos_uf.AsString := ACBrCEP1.Enderecos.Objects[0].UF;
+      end;
+
+    finally
     end;
-  finally
-    FreeAndNil(endereco);
-    FreeAndNil(mensagem);
+  end
+  else
+  begin
+    ShowMessage('CEP não encontrado !');
   end;
 end;
 

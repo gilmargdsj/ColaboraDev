@@ -135,6 +135,15 @@ object frmCadCliente: TfrmCadCliente
         TabOrder = 4
         OnClick = DBNavigator1Click
       end
+      object Memo1: TMemo
+        Left = 376
+        Top = 16
+        Width = 265
+        Height = 89
+        Lines.Strings = (
+          'Memo1')
+        TabOrder = 5
+      end
     end
     object gpbEnderecos: TGroupBox
       Left = 15
@@ -532,5 +541,13 @@ object frmCadCliente: TfrmCadCliente
   object MainMenu1: TMainMenu
     Left = 560
     Top = 88
+  end
+  object ACBrCEP1: TACBrCEP
+    ProxyPort = '8080'
+    ParseText = True
+    WebService = wsViaCep
+    PesquisarIBGE = True
+    Left = 583
+    Top = 452
   end
 end

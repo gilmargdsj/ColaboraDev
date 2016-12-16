@@ -375,7 +375,7 @@ var
   end_id: Integer;
 begin
   Result := False;
-  case qryTelefones_.State of
+  case qryEnderecos_.State of
     dsEdit:
       begin
 
