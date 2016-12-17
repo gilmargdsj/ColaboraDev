@@ -9,7 +9,6 @@
     Database = 'DaVinci'
     Username = 'postgres'
     Server = '192.168.56.101'
-    Connected = True
     LoginPrompt = False
     Left = 48
     Top = 24
@@ -21,7 +20,6 @@
       'SELECT c.*'
       'FROM "DaVinci".clientes c'
       'where (id = :cliente_id) or (:cliente_id is null)')
-    Active = True
     AfterScroll = qryClientes_AfterScroll
     Left = 240
     Top = 136
@@ -159,7 +157,6 @@
       'SELECT *'
       'FROM "DaVinci".produtos'
       'order by descricao')
-    Active = True
     Left = 480
     Top = 56
     object qryProdutos_id: TLargeintField
@@ -190,7 +187,6 @@
       'SELECT *'
       'FROM "DaVinci".pedidos'
       'order by id')
-    Active = True
     Left = 560
     Top = 56
   end
@@ -200,7 +196,6 @@
       'SELECT *'
       'FROM "DaVinci".pedidoXitems'
       'order by pedido_id')
-    Active = True
     Left = 560
     Top = 120
     object qryPedidoXitems_id: TLargeintField
